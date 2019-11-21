@@ -1,19 +1,32 @@
 import os
 
+IPTABLES = 'echo iptables -t {table} {cmd}'
+PREPEND_CMD = IPTABLES.format(cmd='-I {chain} 1 {rule}')
+APPEND_CMD = IPTABLES.format(cmd='-A {chain} {rule}')
+DELETE_CMD = IPTABLES.format(cmd='-D {chain} {rule}')
+
+ADD_PORT_REJECT_RULE = APPEND_RULE.format(table='filter', chain='input', 
+    rule='-p {proto} --dport {port} -j REJECT')
+
+ADD_PORT_IP_ACCEPT_RULE = PREPEND_CMD.format(table='filter', chain='input', 
+    rule='-p {proto} --dport {port} -j REJECT')
+DEL_PORT_IP_ACCEPT_RULE = DELETE_CMD.format(table='filter', chain='input', 
+    rule='-s {ip} -p {proto} --dport {port} -j ACCEPT')
+    
 def add_service(port):
-    os.system('echo iptables -A INPUT -p tcp --dport {port} -j REJECT'.format(port=port))
-    os.system('echo iptables -A INPUT -p udp --dport {port} -j REJECT'.format(port=port))
+    os.system(ADD_PORT_REJECT_RULE.format(proto='tcp', port=port)
+    os.system(ADD_PORT_REJECT_RULE.format(proto='udp', port=port)
     service_ports.append(port)
 
 def open_for(ip):
     for port in service_ports:
-         os.system('echo iptables -A INPUT -s {ip} -p tcp --dport {port} -j ACCEPT'.format(ip=ip, port=port))
-         os.system('echo iptables -A INPUT -s {ip} -p udp --dport {port} -j ACCEPT'.format(ip=ip, port=port))
+         os.system(ADD_PORT_IP_ACCEPT_RULE.format(proto='tcp', ip=ip, port=port))
+         os.system(ADD_PORT_IP_ACCEPT_RULE.format(proto='tcp', ip=ip, port=port))
 
 def close_for(ip):
     for port in service_ports:
-         os.system('echo iptables -D INPUT -s {ip} -p tcp --dport {port} -j ACCEPT'.format(ip=ip, port=port))
-         os.system('echo iptables -D INPUT -s {ip} -p udp --dport {port} -j ACCEPT'.format(ip=ip, port=port))
+         os.system(DEL_PORT_IP_ACCEPT_RULE.format(proto='tcp', ip=ip, port=port))
+         os.system(DEL_PORT_IP_ACCEPT_RULE.format(proto='tcp', ip=ip, port=port))
 
 
 service_ports = [] # e.g. [8080]
@@ -25,5 +38,7 @@ hidden_ports = [] # e.g. [(443, 444)]
 
 for port in ['8080', '10000']:
     add_service(port)
+
 for ip in ['86.57.109.174']:
     open_for(ip)
+    
