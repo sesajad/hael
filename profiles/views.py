@@ -33,5 +33,6 @@ def register(request):
 
 @login_required
 def index(request):
-    submit_client(request)
-    return render(request, 'index.html', {})
+    client_ip, expire_time = submit_client(request)
+    return render(request, 'index.html', {'client_ip': client_ip, 'expire_time': expire_time, 'registered_ips':
+        request.user.ipspec_set.all()})

@@ -5,6 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Index</h1>
+<h3>Logged in as: {{ user.username }} <a href="{% url "logout" %}">Logout</a></h3>
+{% if user and user.is_superuser %}
+    <h3>Superuser actions: <a href="{% url "register" %}">Register</a></h3>
+{% endif %}
+
+<h1>Your registered ips:</h1>
+
+<ol>
+    {% for ip in registered_ips %}
+        <li>
+            {{ ip.address }} - {{ ip.expire_time }}
+        </li>
+    {% endfor %}
+</ol>
+
+<h1>Your ip has been registered: {{ client_ip }}</h1>
+<h1>Will be expired at: {{ expire_time }}</h1>
 </body>
 </html>

@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -9,9 +11,8 @@ class IpSpec(models.Model):
     expire_time = models.DateTimeField()
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            now = timezone.now()
-            self.expire_time = now 
+        now = timezone.now() + timedelta(days=1)
+        self.expire_time = now
         super(IpSpec, self).save(*args, **kwargs)
 
 
