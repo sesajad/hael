@@ -40,6 +40,3 @@ def main():
 
     for port in ['8080', '10000']:
         add_service(port)
-
-    for ip in ['86.57.109.174']:
-        open_for(ip)
