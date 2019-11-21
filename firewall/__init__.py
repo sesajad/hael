@@ -5,14 +5,14 @@ PREPEND_CMD = IPTABLES.format(cmd='-I {chain} 1 {rule}')
 APPEND_CMD = IPTABLES.format(cmd='-A {chain} {rule}')
 DELETE_CMD = IPTABLES.format(cmd='-D {chain} {rule}')
 
-ADD_PORT_REJECT_RULE = APPEND_RULE.format(table='filter', chain='input', 
+ADD_PORT_REJECT_RULE = APPEND_RULE.format(table='filter', chain='input',
     rule='-p {proto} --dport {port} -j REJECT')
 
-ADD_PORT_IP_ACCEPT_RULE = PREPEND_CMD.format(table='filter', chain='input', 
+ADD_PORT_IP_ACCEPT_RULE = PREPEND_CMD.format(table='filter', chain='input',
     rule='-p {proto} --dport {port} -j REJECT')
-DEL_PORT_IP_ACCEPT_RULE = DELETE_CMD.format(table='filter', chain='input', 
+DEL_PORT_IP_ACCEPT_RULE = DELETE_CMD.format(table='filter', chain='input',
     rule='-s {ip} -p {proto} --dport {port} -j ACCEPT')
-    
+
 def add_service(port):
     os.system(ADD_PORT_REJECT_RULE.format(proto='tcp', port=port)
     os.system(ADD_PORT_REJECT_RULE.format(proto='udp', port=port)
@@ -35,10 +35,11 @@ service_ports = [] # e.g. [8080]
 
 hidden_ports = [] # e.g. [(443, 444)]
 
+def main():
+    os.system(IPTABLES.format(table='filter', cmd='-F'))
 
-for port in ['8080', '10000']:
-    add_service(port)
+    for port in ['8080', '10000']:
+        add_service(port)
 
-for ip in ['86.57.109.174']:
-    open_for(ip)
-    
+    for ip in ['86.57.109.174']:
+        open_for(ip)

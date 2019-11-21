@@ -1,12 +1,13 @@
 from profiles.models import Profile, IpSpec
+from firewall import open_for, close_for
 
 
 def whitelist_new_client_ip(client_ip: str):
-    pass
+    open_for(client_ip)
 
 
 def remove_whitelist_ip(client_ip: str):
-    pass
+    close_for(client_ip)
 
 
 def get_client_ip(request):
