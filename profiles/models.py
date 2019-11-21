@@ -1,3 +1,19 @@
+from django.utils import timezone
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
+
+class IpSpec(models.Model):
+    owner = models.ForeignKey('profiles.Profile', on_delete=models.CASCADE)
+    address = models.CharField(max_length=20)
+    expire_time = models.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            now = timezone.now()
+            self.expire_time = now 
+        super(IpSpec, self).save(*args, **kwargs)
+
+
+class Profile(AbstractUser):
+    max_ip = models.SmallIntegerField(default=2)
