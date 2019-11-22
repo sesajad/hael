@@ -42,7 +42,7 @@ systemctl start hael
 
 then you must add garbage collector to system cron jobs, in order to do that, enter `crontab -e` and add following line:
 ```
-05 01 * * * /root/hael/venv/bin/python /root/heal/manage.py gc
+0 */6 * * * /root/hael/venv/bin/python /root/heal/manage.py gc
 ```
 
 
