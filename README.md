@@ -24,12 +24,12 @@ create a database, and then a superuser
 cd /root/heal
 source venv/bin/activate
 python manage.py migrate
-python createsuperuser
+python manage.py createsuperuser
 ```
 
 now for development:
 ```
-python runserver 0.0.0.0:80
+python manage.py runserver 0.0.0.0:80
 ```
 
 also for production (I know we must not use it for production):
@@ -41,7 +41,7 @@ systemctl start hael
 
 then you must add garbage collector to system cron jobs, in order to do that, enter `crontab -e` and add following line:
 ```
-05 01 * * * /root/hael/venv/bin/python /root/heal/manage.py gc
+0 */6 * * * /root/hael/venv/bin/python /root/heal/manage.py gc
 ```
 
 
