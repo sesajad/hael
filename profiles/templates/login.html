@@ -1,0 +1,18 @@
+<html>
+  <title>Login</title>
+<body>
+  <h2>Login</h2>
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+    <p><label>Username: </label>
+    <input name="username" type="text" />
+    </p>
+    <p><label>Password: </label>
+    <input name="password" type="password" />
+    </p>
+    <p><button>Submit</button>
+    {% if error_message %}{{ error_message }}{% endif %}
+  </form>
+</body>
+</html>
