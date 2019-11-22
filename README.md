@@ -3,7 +3,7 @@ somethings lays in between
 
 ## Description
 Hael is a firewall controller, which opens blocked ports for a limited time (default=24h) for anybody who logs into it account.
-it whitelists the IP, therefore it's not that much safe. you must NOT rely on it. 
+it whitelists the IP, therefore it's not that much safe. you must NOT rely on it.
 
 ## Usage
 
@@ -23,7 +23,6 @@ create a database, and then a superuser
 ```
 cd /root/heal
 source venv/bin/activate
-python manage.py makemigrations profiles
 python manage.py migrate
 python createsuperuser
 ```
@@ -47,4 +46,3 @@ then you must add garbage collector to system cron jobs, in order to do that, en
 
 
 **Note: don't forget to `ufw deny YOUR_SERIVCE_PORT` and `ufw allow http`**
-
