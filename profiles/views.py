@@ -20,7 +20,7 @@ def register(request):
     elif request.method == 'POST':
         form = CreateUserForm(data=request.POST)
         if form.is_valid():
-            inst: Profile = form.save(commit=False)
+            inst = form.save(commit=False)
             inst.set_password(form.cleaned_data['password'])
             inst.save()
             return redirect('index')
