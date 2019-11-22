@@ -3,7 +3,7 @@ import os
 
 
 def whitelist_new_client_ip(client_ip: str):
-    os.system('ufw allow from {}'.format(client_ip))
+    os.system('ufw insert 1 allow from {}'.format(client_ip))
 
 
 def remove_whitelist_ip(client_ip: str):
