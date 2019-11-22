@@ -1,0 +1,10 @@
+[Unit]
+Description=Hael in between
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/root/hael/venv/bin/python /root/hael/manage.py runserver 0.0.0.0:80
+
+[Install]
+WantedBy=multi-user.target
