@@ -23,6 +23,7 @@ create a database, and then a superuser
 ```
 cd /root/heal
 source venv/bin/activate
+python manage.py makemigrations profiles
 python manage.py migrate
 python createsuperuser
 ```
