@@ -25,12 +25,12 @@ cd /root/heal
 source venv/bin/activate
 python manage.py makemigrations profiles
 python manage.py migrate
-python createsuperuser
+python manage.py createsuperuser
 ```
 
 now for development:
 ```
-python runserver 0.0.0.0:80
+python manage.py runserver 0.0.0.0:80
 ```
 
 also for production (I know we must not use it for production):
