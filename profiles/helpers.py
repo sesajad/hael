@@ -1,9 +1,16 @@
-from profiles.models import Profile, IpSpec
 import os
+
+from profiles.models import Profile, IpSpec
+from ufw import frontend
+from ufw.common import UFWRule
 
 
 def whitelist_new_client_ip(client_ip: str):
-    os.system('ufw insert 1 allow from {}'.format(client_ip))
+    # os.system('ufw insert 1 allow from {}'.format(client_ip))
+    rule = UFWRule(action='allow', protocol='any', src=client_ip)
+    front = frontend.UFWFrontend(False)
+    result = front.set_rule(rule, 'both')
+    print(result)
 
 
 def remove_whitelist_ip(client_ip: str):
